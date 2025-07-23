@@ -1,10 +1,10 @@
-package com.example.structuredb;
+package com.example.buildingdb;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StructureDbApplicationTests {
+class BuildingDbApplicationTests {
 
     @Test
     void contextLoads() {
