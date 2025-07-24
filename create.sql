@@ -23,13 +23,11 @@ create table TAGS(
 );
 
 create table BUILDINGS_AND_TAGS(
-	id int primary key,
 	building_id int not null,
 	tag_id int not null,
+    primary key (building_id, tag_id),
 	foreign key(building_id) references BUILDINGS(id)
 		on delete cascade
-        on update cascade,
 	foreign key(tag_id) references TAGS(id)
 		on delete cascade
-        on update cascade
 );
