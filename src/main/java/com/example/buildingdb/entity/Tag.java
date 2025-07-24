@@ -18,7 +18,7 @@ public class Tag {
 
     private String name;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "tags")
     @JoinTable(name = "BUILDINGS_AND_TAGS",
             joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "building_id"))
