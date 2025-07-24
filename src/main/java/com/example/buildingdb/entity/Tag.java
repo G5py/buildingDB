@@ -2,6 +2,7 @@ package com.example.buildingdb.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "TAGS")
 @Getter
+@Setter
 public class Tag {
 
     @Id
@@ -18,12 +20,15 @@ public class Tag {
 
     private String name;
 
-    @ManyToMany(mappedBy = "tags")
-    @JoinTable(name = "BUILDINGS_AND_TAGS",
-            joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "building_id"))
-    private List<Building> buildings = new ArrayList<>();
+    @OneToMany(mappedBy = "tag")
+    private List<BuildingsAndTags> buildings = new ArrayList<>();
 
+
+    public List<Building> getBuildings() {
+        return this.buildings.stream()
+                .map(BuildingsAndTags::getBuilding)
+                .toList();
+    }
 
 
 }
