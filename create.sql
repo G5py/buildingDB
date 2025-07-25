@@ -33,3 +33,21 @@ create table CATEGORIES(
 		on delete cascade
         on update cascade
 );
+
+delimiter $$
+
+create trigger reject_insert_of_existing_category
+    before insert on CATEGORIES
+    for each row
+    begin
+        if exists (
+            select 1 from CATEGORIES where
+            building_id = NEW.building_id
+            and tag_id = NEW.tag_id
+        ) then
+            signal sqlstate '45000'
+            set message_text = 'Already existing category.';
+        end if;
+    end$$
+
+delimiter ;
