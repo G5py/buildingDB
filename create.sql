@@ -22,7 +22,7 @@ create table TAGS(
 	name varchar(20) not null
 );
 
-create table BUILDINGS_AND_TAGS(
+create table CATEGORIES(
 	id bigint primary key,
 	building_id bigint not null,
 	tag_id bigint not null,

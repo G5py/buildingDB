@@ -37,19 +37,19 @@ public class Building {
     private Architect architect;
 
     @OneToMany(mappedBy = "building")
-    private List<BuildingsAndTags> buildingsAndTags = new ArrayList<>();
+    private List<Category> category = new ArrayList<>();
 
 
     public List<Tag> getTags() {
-        return this.buildingsAndTags.stream()
-                .map(BuildingsAndTags::getTag)
+        return this.category.stream()
+                .map(Category::getTag)
                 .toList();
     }
 
-    public void addTag(Tag tag) {
-        if (tag == null) { return; }
-        if (getTags().contains(tag)) { return; }
+    public void addCategory(Category category) {
+        if (category == null) { return; }
+        if (getCategory().contains(category)) { return; }
 
-        this.buildingsAndTags.add(new BuildingsAndTags(this, tag));
+        this.category.add(category);
     }
 }

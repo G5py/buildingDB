@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "BUILDINGS_AND_TAGS")
+@Table(name = "CATEGORIES")
 @NoArgsConstructor
 @Getter
 @Setter
-public class BuildingsAndTags {
+public class Category {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +23,7 @@ public class BuildingsAndTags {
     @JoinColumn(name = "tag_id")
     private Tag tag;
 
-    BuildingsAndTags(Building building, Tag tag) {
+    Category(Building building, Tag tag) {
         this.building = building;
         this.tag = tag;
     }

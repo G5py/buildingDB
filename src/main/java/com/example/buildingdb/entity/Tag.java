@@ -21,20 +21,20 @@ public class Tag {
     private String name;
 
     @OneToMany(mappedBy = "tag")
-    private List<BuildingsAndTags> buildingsAndTags = new ArrayList<>();
+    private List<Category> category = new ArrayList<>();
 
 
     public List<Building> getBuildings() {
-        return this.buildingsAndTags.stream()
-                .map(BuildingsAndTags::getBuilding)
+        return this.category.stream()
+                .map(Category::getBuilding)
                 .toList();
     }
 
-    public void addBuilding(Building building) {
-        if (building == null) { return; }
-        if (getBuildings().contains(building)) { return; }
+    public void addCategory(Category category) {
+        if (category == null) { return; }
+        if (getCategory().contains(category)) { return; }
 
-        this.getBuildingsAndTags().add(new BuildingsAndTags(building, this));
+        this.getCategory().add(category);
     }
 
 
