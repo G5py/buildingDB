@@ -13,7 +13,7 @@ create table BUILDINGS(
     korean_name varchar(40),
 	coordinates point,
 	completed_date date,
-	architect_id int,
+	architect_id bigint,
 	foreign key(architect_id) references ARCHITECTS(id)
 );
 
