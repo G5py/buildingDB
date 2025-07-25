@@ -1,14 +1,14 @@
-create database STRUCTURE_DB;
-use STRUCTURE_DB;
+create database BUILDING_DB;
+use BUILDING_DB;
 
 create table ARCHITECTS(
-	id int primary key auto_increment,
+	id bigint primary key auto_increment,
 	name varchar(20) NOT null,
     korean_name varchar(20)
 );
 
 create table BUILDINGS(
-	id int primary key auto_increment,
+	id bigint primary key auto_increment,
 	name varchar(40) not null,
     korean_name varchar(40),
 	coordinates point,
@@ -18,14 +18,14 @@ create table BUILDINGS(
 );
 
 create table TAGS(
-	id int primary key,
+	id bigint primary key,
 	name varchar(20) not null
 );
 
 create table BUILDINGS_AND_TAGS(
-	id int primary key,
-	building_id int not null,
-	tag_id int not null,
+	id bigint primary key,
+	building_id bigint not null,
+	tag_id bigint not null,
 	foreign key(building_id) references BUILDINGS(id)
 		on delete cascade
         on update cascade,
