@@ -1,15 +1,14 @@
 package com.example.buildingdb.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "CATEGORIES")
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
+@Builder
 @Getter
 @Setter
 public class Category {
@@ -19,14 +18,12 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name = "building_id")
+    @NonNull
     private Building building;
 
     @ManyToOne
     @JoinColumn(name = "tag_id")
+    @NonNull
     private Tag tag;
 
-    Category(Building building, Tag tag) {
-        this.building = building;
-        this.tag = tag;
-    }
 }

@@ -1,10 +1,7 @@
 package com.example.buildingdb.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDate;
@@ -16,6 +13,8 @@ import java.util.List;
 @Table(name = "BUILDINGS")
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
+@Builder
 @Getter
 @Setter
 public class Building {
@@ -24,7 +23,10 @@ public class Building {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
     private String name;
+
+    private String koreanName;
 
     @Column(columnDefinition = "POINT")
     private Point coordinates;
@@ -39,6 +41,10 @@ public class Building {
     @OneToMany(mappedBy = "building")
     private List<Category> category = new ArrayList<>();
 
+    public Building(@NonNull String name, Architect architect) {
+        this.name = name;
+        this.architect = architect;
+    }
 
     public List<Tag> getTags() {
         return this.category.stream()
