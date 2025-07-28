@@ -3,14 +3,14 @@ use BUILDING_DB;
 
 create table ARCHITECTS(
 	id bigint primary key auto_increment,
-	name varchar(20) NOT null,
-    korean_name varchar(20)
+	name varchar(20) NOT null unique ,
+    korean_name varchar(20) unique
 );
 
 create table BUILDINGS(
 	id bigint primary key auto_increment,
-	name varchar(40) not null,
-    korean_name varchar(40),
+	name varchar(40) not null unique,
+    korean_name varchar(40) unique,
 	coordinates point,
 	completed_date date,
 	architect_id bigint,
@@ -19,7 +19,7 @@ create table BUILDINGS(
 
 create table TAGS(
 	id bigint primary key,
-	name varchar(20) not null
+	name varchar(20) not null unique
 );
 
 create table CATEGORIES(
