@@ -38,13 +38,11 @@ public class CategoryRepositoryTest {
         Building b1 = Building.builder()
                 .name("Church on the Water")
                 .koreanName("물의 교회")
-                .architect(new Architect("Tadao Ando"))
                 .build();
 
         Building b2 = Building.builder()
                 .name("Amorepacific headquarters")
                 .koreanName("아모레퍼시픽 사옥")
-                .architect(new Architect("Sir David Chipperfield"))
                 .build();
 
         Category category1 = new Category(b1, tag);
@@ -60,12 +58,12 @@ public class CategoryRepositoryTest {
 
 
         // when
-        List<Building> result = cr.findByTag(tag);
+        List<Category> result = cr.findByTag(tag);
 
         // then
-        List<Building> expected = new ArrayList<>();
-        expected.add(b1);
-        expected.add(b2);
+        List<Category> expected = new ArrayList<>();
+        expected.add(category1);
+        expected.add(category2);
 
         assertThat(result).isEqualTo(expected);
     }

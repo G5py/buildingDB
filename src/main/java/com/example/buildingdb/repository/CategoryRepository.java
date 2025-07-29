@@ -9,5 +9,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    public List<Building> findByTag(Tag tag);
+    public List<Category> findByTag(Tag tag);
 }

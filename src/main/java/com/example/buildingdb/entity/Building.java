@@ -46,16 +46,4 @@ public class Building {
         this.architect = architect;
     }
 
-    public List<Tag> getTags() {
-        return this.category.stream()
-                .map(Category::getTag)
-                .toList();
-    }
-
-    public void addCategory(Category category) {
-        if (category == null) { return; }
-        if (getCategory().contains(category)) { return; }
-
-        this.category.add(category);
-    }
 }

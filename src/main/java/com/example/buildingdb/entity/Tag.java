@@ -27,18 +27,4 @@ public class Tag {
     private List<Category> category = new ArrayList<>();
 
 
-    public List<Building> getBuildings() {
-        return this.category.stream()
-                .map(Category::getBuilding)
-                .toList();
-    }
-
-    public void addCategory(Category category) {
-        if (category == null) { return; }
-        if (getCategory().contains(category)) { return; }
-
-        this.getCategory().add(category);
-    }
-
-
 }
