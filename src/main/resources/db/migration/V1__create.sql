@@ -1,4 +1,4 @@
-create database BUILDING_DB;
+create database if not exists BUILDING_DB;
 use BUILDING_DB;
 
 create table ARCHITECTS(
