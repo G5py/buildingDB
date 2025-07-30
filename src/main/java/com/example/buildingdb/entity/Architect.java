@@ -18,4 +18,11 @@ public class Architect {
 
     @NonNull
     private String name;
+
+    private String koreanName;
+
+    public Architect(@NonNull String name, String koreanName) {
+        this.name = name;
+        this.koreanName = koreanName;
+    }
 }
