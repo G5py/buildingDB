@@ -35,9 +35,8 @@ public class ArchitectService {
             throw new InvalidDataException("The architect's name already exists.");
         }
 
-        architectRepo.save(architectDto.toArchitectEntity());
+        return ArchitectDto.getFromArchitect(architectRepo.save(architectDto.toArchitectEntity()));
 
-        return architectDto;
     }
 
     public ArchitectDto getArchitect(Long id) throws InvalidDataException{
