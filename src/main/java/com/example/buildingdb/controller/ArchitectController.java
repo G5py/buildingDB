@@ -30,12 +30,13 @@ public class ArchitectController {
     }
 
     @PutMapping
-    public void putArchitect(@RequestBody ArchitectDto architectDto) throws InvalidDataException {
-        architectService.putArchitect(architectDto);
+    public ArchitectDto putArchitect(@RequestBody ArchitectDto architectDto) throws InvalidDataException {
+        return architectService.putArchitect(architectDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArchitect(@PathVariable Long id) throws InvalidDataException {
+    public ArchitectDto deleteArchitect(@PathVariable Long id) throws InvalidDataException {
         architectService.deleteArchitect(id);
+        return ArchitectDto.builder().id(id).build();
     }
 }

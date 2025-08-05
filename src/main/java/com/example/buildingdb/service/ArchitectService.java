@@ -50,7 +50,7 @@ public class ArchitectService {
         return ArchitectDto.getFromArchitect(architect);
     }
 
-    public void putArchitect(ArchitectDto architectDto) throws InvalidDataException {
+    public ArchitectDto putArchitect(ArchitectDto architectDto) throws InvalidDataException {
         if (architectDto.getId() == null) {
             throw new InvalidDataException("Id can't be null.");
         }
@@ -58,8 +58,7 @@ public class ArchitectService {
             throw new InvalidDataException("Invalid architect id.");
         }
 
-        architectRepo.save(architectDto.toArchitectEntity());
-
+        return ArchitectDto.getFromArchitect(architectRepo.save(architectDto.toArchitectEntity()));
     }
 
     public void deleteArchitect(Long id) throws InvalidDataException {
