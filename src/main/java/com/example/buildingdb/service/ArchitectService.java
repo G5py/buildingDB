@@ -35,7 +35,7 @@ public class ArchitectService {
             throw new InvalidDataException("The architect's name already exists.");
         }
 
-        return ArchitectDto.getFromArchitect(architectRepo.save(architectDto.toArchitectEntity()));
+        return new ArchitectDto(architectRepo.save(architectDto.toArchitectEntity()));
 
     }
 
@@ -47,7 +47,7 @@ public class ArchitectService {
         Optional<Architect> archOpt = architectRepo.findById(id);
         Architect architect = archOpt.orElseThrow(() -> new InvalidDataException("Invalid architect id."));
 
-        return ArchitectDto.getFromArchitect(architect);
+        return new ArchitectDto(architect);
     }
 
     public ArchitectDto putArchitect(ArchitectDto architectDto) throws InvalidDataException {
@@ -58,7 +58,7 @@ public class ArchitectService {
             throw new InvalidDataException("Invalid architect id.");
         }
 
-        return ArchitectDto.getFromArchitect(architectRepo.save(architectDto.toArchitectEntity()));
+        return new ArchitectDto(architectRepo.save(architectDto.toArchitectEntity()));
     }
 
     public void deleteArchitect(Long id) throws InvalidDataException {

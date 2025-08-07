@@ -17,11 +17,14 @@ public class ArchitectDto {
     private String name;
     private String koreanName;
 
+    public ArchitectDto(Architect architect) {
+        this.id = architect.getId();
+        this.name = architect.getName();
+        this.koreanName = architect.getKoreanName();
+    }
+
     public Architect toArchitectEntity() {
         return new Architect(this.name, this.koreanName);
     }
 
-    public static ArchitectDto getFromArchitect(Architect architect) {
-        return new ArchitectDto(architect.getId(), architect.getName(), architect.getKoreanName());
-    }
 }

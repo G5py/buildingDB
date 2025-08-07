@@ -23,7 +23,6 @@ public class ArchitectController {
         return architectService.addArchitect(architectDto);
     }
 
-
     @GetMapping("/{id}")
     public ArchitectDto getArchitect(@PathVariable Long id) throws InvalidDataException {
         return architectService.getArchitect(id);
