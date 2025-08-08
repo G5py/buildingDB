@@ -5,8 +5,6 @@ import lombok.*;
 import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
@@ -38,8 +36,6 @@ public class Building {
     @JoinColumn(name = "architect_id")
     private Architect architect;
 
-    @OneToMany(mappedBy = "building")
-    private List<Category> category = new ArrayList<>();
 
     public Building(@NonNull String name, Architect architect) {
         this.name = name;
