@@ -2,6 +2,7 @@ package com.example.buildingdb.dto;
 
 import com.example.buildingdb.entity.Architect;
 import com.example.buildingdb.entity.Building;
+import lombok.Builder;
 import lombok.Getter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -9,6 +10,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import java.time.LocalDate;
 
 @Getter
+@Builder
 public class BuildingDto {
 
     private final boolean success = true;
