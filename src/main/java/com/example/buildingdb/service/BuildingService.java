@@ -66,7 +66,7 @@ public class BuildingService {
 
     public void deleteBuilding(Long id) throws InvalidDataException {
         if (id == null) {
-            throw new InvalidDataException("id can't be null");
+            throw new InvalidDataException("Id can't be null");
         }
 
         buildingRepository.deleteById(id);
