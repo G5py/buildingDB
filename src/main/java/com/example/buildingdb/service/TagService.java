@@ -4,6 +4,7 @@ import com.example.buildingdb.dto.TagDto;
 import com.example.buildingdb.entity.Tag;
 import com.example.buildingdb.exception.InvalidDataException;
 import com.example.buildingdb.repository.TagRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,6 +14,10 @@ public class TagService {
 
     private TagRepository tagRepository;
 
+    @Autowired
+    public TagService(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
 
     public TagDto addTag(TagDto tagDto) throws InvalidDataException {
         if (tagDto.getName() == null) {
