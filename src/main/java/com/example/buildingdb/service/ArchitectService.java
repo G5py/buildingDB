@@ -50,15 +50,14 @@ public class ArchitectService {
         return new ArchitectDto(architect);
     }
 
-    public ArchitectDto putArchitect(ArchitectDto architectDto) throws InvalidDataException {
-        if (architectDto.getId() == null) {
+    public ArchitectDto putArchitect(Long id, ArchitectDto architectDto) throws InvalidDataException {
+        if (id == null) {
             throw new InvalidDataException("Id can't be null.");
         }
-        if (architectRepo.existsById(architectDto.getId())) {
-            throw new InvalidDataException("Invalid architect id.");
-        }
 
-        return new ArchitectDto(architectRepo.save(architectDto.toArchitectEntity()));
+        Architect saved = architectRepo.save(architectDto.toArchitectEntity());
+
+        return new ArchitectDto(saved);
     }
 
     public void deleteArchitect(Long id) throws InvalidDataException {

@@ -27,9 +27,9 @@ public class BuildingController {
         return buildingService.getBuilding(id);
     }
 
-    @PutMapping
-    public BuildingDto putBuilding(@RequestBody BuildingDto buildingDto) throws InvalidDataException {
-        return buildingService.putBuilding(buildingDto);
+    @PutMapping("/{id}")
+    public BuildingDto putBuilding(@PathVariable Long id, @RequestBody BuildingDto buildingDto) throws InvalidDataException {
+        return buildingService.putBuilding(id, buildingDto);
     }
 
     @DeleteMapping("/{id}")

@@ -47,12 +47,9 @@ public class BuildingService {
         return new BuildingDto(building);
     }
 
-    public BuildingDto putBuilding(BuildingDto buildingDto) throws InvalidDataException {
-        if (buildingDto.getId() == null) {
+    public BuildingDto putBuilding(Long id, BuildingDto buildingDto) throws InvalidDataException {
+        if (id == null) {
             throw new InvalidDataException("Id can't be null");
-        }
-        if (!buildingRepository.existsById(buildingDto.getId())) {
-            throw new InvalidDataException("Id is invalid.");
         }
         if (buildingDto.getArchitectName() == null) {
             throw new InvalidDataException("Architect name can't be null.");
@@ -61,7 +58,9 @@ public class BuildingService {
         Optional<Architect> architectOpt = architectRepository.findByName(buildingDto.getArchitectName());
         Architect architect = architectOpt.orElseThrow(() -> new InvalidDataException("Architect's name is invalid."));
 
-        return new BuildingDto(buildingRepository.save(buildingDto.toBuildingEntity(architect)));
+        Building saved = buildingRepository.save(buildingDto.toBuildingEntity(architect));
+
+        return new BuildingDto(saved);
     }
 
     public void deleteBuilding(Long id) throws InvalidDataException {

@@ -63,13 +63,13 @@ class ArchitectControllerTest {
             ArchitectDto dto = new ArchitectDto(1L, "Tadao Ando", "안도 다다오");
 
             ArchitectService mockService = mock(ArchitectService.class);
-            when(mockService.putArchitect(dto))
+            when(mockService.putArchitect(1L, dto))
                     .thenReturn(dto);
 
             ArchitectController controller = new ArchitectController(mockService);
 
             // when
-            ArchitectDto actual = controller.putArchitect(dto);
+            ArchitectDto actual = controller.putArchitect(1L, dto);
 
             // then
             assertThat(actual).isEqualTo(dto);

@@ -28,9 +28,9 @@ public class ArchitectController {
         return architectService.getArchitect(id);
     }
 
-    @PutMapping
-    public ArchitectDto putArchitect(@RequestBody ArchitectDto architectDto) throws InvalidDataException {
-        return architectService.putArchitect(architectDto);
+    @PutMapping("/{id}")
+    public ArchitectDto putArchitect(@PathVariable Long id, @RequestBody ArchitectDto architectDto) throws InvalidDataException {
+        return architectService.putArchitect(id, architectDto);
     }
 
     @DeleteMapping("/{id}")
