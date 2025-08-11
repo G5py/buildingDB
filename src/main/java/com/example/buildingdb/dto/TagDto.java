@@ -1,9 +1,13 @@
 package com.example.buildingdb.dto;
 
 import com.example.buildingdb.entity.Tag;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
+@Builder
 public class TagDto {
 
     private boolean success = true;
