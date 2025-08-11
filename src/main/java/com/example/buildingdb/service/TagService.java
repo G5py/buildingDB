@@ -40,6 +40,19 @@ public class TagService {
         return new TagDto(tag);
     }
 
+    public TagDto putTag(Long id, TagDto tagDto) throws InvalidDataException {
+        if (id == null) {
+            throw new InvalidDataException("Id can't be null.");
+        }
+        if (tagDto.getName() == null) {
+            throw new InvalidDataException("Tag name can't be null.");
+        }
+
+        Tag saved = tagRepository.save(tagDto.toTagEntity());
+
+        return new TagDto(saved);
+    }
+
     public void deleteTag(Long id) throws InvalidDataException {
         if (id == null) {
             throw new InvalidDataException("Id can't be null.");
