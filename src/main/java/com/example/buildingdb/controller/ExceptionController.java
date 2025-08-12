@@ -8,11 +8,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.net.URISyntaxException;
+
 @RestControllerAdvice
 public class ExceptionController {
 
     @ExceptionHandler(InvalidDataException.class)
     public ResponseEntity<ErrorResponse> HandleInvalidDataException(InvalidDataException e) {
-        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+        return ResponseEntity
+                .badRequest()
+                .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(URISyntaxException.class)
+    public ResponseEntity<String> handleURISyntaxException(URISyntaxException e) {
+        return ResponseEntity
+                .internalServerError()
+                .body("Failed to create URI.");
     }
 }

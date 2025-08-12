@@ -4,6 +4,10 @@ import com.example.buildingdb.dto.ArchitectDto;
 import com.example.buildingdb.exception.InvalidDataException;
 import com.example.buildingdb.service.ArchitectService;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import java.net.URISyntaxException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -25,12 +29,15 @@ class ArchitectControllerTest {
             ArchitectController controller = new ArchitectController(mockService);
 
             // when
-            ArchitectDto actual = controller.postArchitect(dto);
+            ResponseEntity<ArchitectDto> actual = controller.postArchitect(dto);
 
             // then
-            assertThat(actual).isEqualTo(dto);
+            assertThat(actual.getBody()).isEqualTo(dto);
+            assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         } catch (InvalidDataException e) {
-            fail("Exception occurred.");
+            fail("InvalidDataException occurred.");
+        } catch (URISyntaxException e) {
+            fail("URISyntaxException occurred.");
         }
     }
 

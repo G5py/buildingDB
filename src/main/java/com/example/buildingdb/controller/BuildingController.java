@@ -4,8 +4,13 @@ import com.example.buildingdb.dto.BuildingDto;
 import com.example.buildingdb.exception.InvalidDataException;
 import com.example.buildingdb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("/buildings")
@@ -19,9 +24,13 @@ public class BuildingController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public BuildingDto postBuilding(@RequestBody BuildingDto buildingDto) throws InvalidDataException {
-        return buildingService.addBuilding(buildingDto);
+    public ResponseEntity<BuildingDto> postBuilding(@RequestBody BuildingDto buildingDto) throws InvalidDataException, URISyntaxException {
+        BuildingDto resultBuildingDto = buildingService.addBuilding(buildingDto);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(new URI("/buildings/" + resultBuildingDto.getId().toString()));
+
+        return new ResponseEntity<>(resultBuildingDto, headers, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
