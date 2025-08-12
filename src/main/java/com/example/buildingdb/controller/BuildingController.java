@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 @RequestMapping("/buildings")
 public class BuildingController {
 
-    private BuildingService buildingService;
+    private final BuildingService buildingService;
 
     @Autowired
     public BuildingController(BuildingService buildingService) {
