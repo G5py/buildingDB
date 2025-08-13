@@ -10,7 +10,7 @@ import lombok.Getter;
 @Builder
 public class TagDto {
 
-    private boolean success = true;
+    private final boolean success = true;
     private Long id;
     private String name;
 
