@@ -1,7 +1,9 @@
 package com.example.buildingdb.controller;
 
+import com.example.buildingdb.dto.BuildingDto;
 import com.example.buildingdb.dto.TagDto;
 import com.example.buildingdb.exception.InvalidDataException;
+import com.example.buildingdb.service.CategoryService;
 import com.example.buildingdb.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -11,16 +13,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tags")
 public class TagController {
 
     private final TagService tagService;
+    private final CategoryService categoryService;
+
 
     @Autowired
-    public TagController(TagService tagService) {
+    public TagController(TagService tagService, CategoryService categoryService) {
         this.tagService = tagService;
+        this.categoryService = categoryService;
     }
 
     @PostMapping
@@ -38,6 +44,12 @@ public class TagController {
     @ResponseStatus(HttpStatus.OK)
     public TagDto getTag(@PathVariable Long id) throws InvalidDataException {
         return tagService.getTag(id);
+    }
+
+    @GetMapping("/{id}/building")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BuildingDto> getTaggedBuildings(@PathVariable Long id) throws InvalidDataException {
+        return categoryService.getBuildingsByTagId(id);
     }
 
     @PutMapping("/{id}")
