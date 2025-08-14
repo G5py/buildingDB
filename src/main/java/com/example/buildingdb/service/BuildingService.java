@@ -24,12 +24,7 @@ public class BuildingService {
     }
 
     public BuildingDto addBuilding(BuildingDto buildingDto) {
-        if (buildingDto.getName() == null) {
-            throw new InvalidDataException("Building's name can't be null.");
-        }
-        if (buildingDto.getArchitectName() == null) {
-            throw new InvalidDataException("Architect name can't be null.");
-        }
+        validateBuildingDto(buildingDto);
 
         Optional<Architect> architectOpt = architectRepository.findByName(buildingDto.getArchitectName());
         Architect architect = architectOpt.orElseThrow(() -> new InvalidDataException("Architect name is invalid."));
@@ -38,9 +33,7 @@ public class BuildingService {
     }
 
     public BuildingDto getBuilding(Long id) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
+        validateId(id);
 
         Building building = buildingRepository.findById(id).orElseThrow(() -> new InvalidDataException("Id is invalid."));
 
@@ -48,12 +41,8 @@ public class BuildingService {
     }
 
     public BuildingDto putBuilding(Long id, BuildingDto buildingDto) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null");
-        }
-        if (buildingDto.getArchitectName() == null) {
-            throw new InvalidDataException("Architect name can't be null.");
-        }
+        validateId(id);
+        validateBuildingDto(buildingDto);
 
         Optional<Architect> architectOpt = architectRepository.findByName(buildingDto.getArchitectName());
         Architect architect = architectOpt.orElseThrow(() -> new InvalidDataException("Architect's name is invalid."));
@@ -64,11 +53,24 @@ public class BuildingService {
     }
 
     public void deleteBuilding(Long id) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null");
-        }
+        validateId(id);
 
         buildingRepository.deleteById(id);
     }
 
+
+    private void validateId(Long id) {
+        if (id == null) {
+            throw new InvalidDataException("Id can't be null.");
+        }
+    }
+
+    private void validateBuildingDto(BuildingDto buildingDto) {
+        if (buildingDto.getName() == null) {
+            throw new InvalidDataException("Building's name can't be null.");
+        }
+        if (buildingDto.getArchitectName() == null) {
+            throw new InvalidDataException("Architect name can't be null.");
+        }
+    }
 }

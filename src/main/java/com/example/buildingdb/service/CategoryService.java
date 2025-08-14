@@ -31,9 +31,7 @@ public class CategoryService {
     }
 
     public List<BuildingDto> getBuildingsByTagId(Long tagId) {
-        if (tagId == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
+        validateId(tagId);
 
         Optional<Tag> tagOpt = tagRepository.findById(tagId);
         Tag tag = tagOpt.orElseThrow(() -> new InvalidDataException("Tag id is invalid."));
@@ -47,9 +45,7 @@ public class CategoryService {
     }
 
     public List<TagDto> getTagsByBuildingId(Long buildingId) {
-        if (buildingId == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
+        validateId(buildingId);
 
         Optional<Building> buildingsOpt = buildingRepository.findById(buildingId);
         Building building = buildingsOpt.orElseThrow(() -> new InvalidDataException("Building id is invalid."));
@@ -60,5 +56,12 @@ public class CategoryService {
                 .map(Category::getTag)
                 .map(TagDto::new)
                 .toList();
+    }
+
+
+    private void validateId(Long tagId) {
+        if (tagId == null) {
+            throw new InvalidDataException("Id can't be null.");
+        }
     }
 }

@@ -20,9 +20,7 @@ public class TagService {
     }
 
     public TagDto addTag(TagDto tagDto) throws InvalidDataException {
-        if (tagDto.getName() == null) {
-            throw new InvalidDataException("Tag name can't be null.");
-        }
+        validateTagDto(tagDto);
 
         Tag newTag = tagRepository.save(tagDto.toTagEntity());
 
@@ -30,9 +28,7 @@ public class TagService {
     }
 
     public TagDto getTag(Long id) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
+        validateId(id);
 
         Optional<Tag> tagOpt = tagRepository.findById(id);
         Tag tag = tagOpt.orElseThrow(() -> new InvalidDataException("Id is invalid."));
@@ -41,12 +37,8 @@ public class TagService {
     }
 
     public TagDto putTag(Long id, TagDto tagDto) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
-        if (tagDto.getName() == null) {
-            throw new InvalidDataException("Tag name can't be null.");
-        }
+        validateId(id);
+        validateTagDto(tagDto);
 
         Tag saved = tagRepository.save(tagDto.toTagEntity());
 
@@ -54,9 +46,7 @@ public class TagService {
     }
 
     public void deleteTag(Long id) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
+        validateId(id);
         if (!tagRepository.existsById(id)) {
             throw new InvalidDataException("Id is invalid.");
         }
@@ -64,4 +54,16 @@ public class TagService {
         tagRepository.deleteById(id);
     }
 
+
+    private void validateId(Long id) {
+        if (id == null) {
+            throw new InvalidDataException("Id can't be null.");
+        }
+    }
+
+    private void validateTagDto(TagDto tagDto) {
+        if (tagDto.getName() == null) {
+            throw new InvalidDataException("Tag name can't be null.");
+        }
+    }
 }

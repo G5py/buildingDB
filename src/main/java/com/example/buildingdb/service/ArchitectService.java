@@ -21,6 +21,56 @@ public class ArchitectService {
     }
 
     public ArchitectDto addArchitect(ArchitectDto architectDto) {
+        validateArchitectDto(architectDto);
+
+        if (architectRepo.existsByName(architectDto.getName())) {
+            throw new InvalidDataException("The architect's name already exists.");
+        }
+
+        return new ArchitectDto(architectRepo.save(architectDto.toArchitectEntity()));
+
+    }
+
+    public ArchitectDto getArchitect(Long id) {
+        validateId(id);
+
+        Optional<Architect> archOpt = architectRepo.findById(id);
+        Architect architect = archOpt.orElseThrow(() -> new InvalidDataException("Invalid architect id."));
+
+        return new ArchitectDto(architect);
+    }
+
+    public ArchitectDto putArchitect(Long id, ArchitectDto architectDto) {
+        validateId(id);
+        validateArchitectDto(architectDto);
+
+        Architect saved = architectRepo.save(architectDto.toArchitectEntity());
+
+        return new ArchitectDto(saved);
+    }
+
+    public void deleteArchitect(Long id) {
+        validateId(id);
+
+        architectRepo.deleteById(id);
+    }
+
+
+    private boolean isValidEnglishName(String englishName) {
+        return Pattern.matches("^[a-zA-Z\\s]+$", englishName);
+    }
+
+    private boolean isValidKoreanName(String koreanName) {
+        return Pattern.matches("^[가-힣0-9\\s]+$", koreanName);
+    }
+
+    private void validateId(Long id) {
+        if (id == null) {
+            throw new InvalidDataException("Id can't be null.");
+        }
+    }
+
+    private void validateArchitectDto(ArchitectDto architectDto) {
         if (architectDto.getName() == null) {
             throw new InvalidDataException("Architect's name can't be null.");
         }
@@ -31,48 +81,5 @@ public class ArchitectService {
                 !isValidKoreanName(architectDto.getKoreanName())) {
             throw new InvalidDataException("Architect's korean name is invalid.");
         }
-        if (architectRepo.existsByName(architectDto.getName())) {
-            throw new InvalidDataException("The architect's name already exists.");
-        }
-
-        return new ArchitectDto(architectRepo.save(architectDto.toArchitectEntity()));
-
-    }
-
-    public ArchitectDto getArchitect(Long id) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
-
-        Optional<Architect> archOpt = architectRepo.findById(id);
-        Architect architect = archOpt.orElseThrow(() -> new InvalidDataException("Invalid architect id."));
-
-        return new ArchitectDto(architect);
-    }
-
-    public ArchitectDto putArchitect(Long id, ArchitectDto architectDto) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
-
-        Architect saved = architectRepo.save(architectDto.toArchitectEntity());
-
-        return new ArchitectDto(saved);
-    }
-
-    public void deleteArchitect(Long id) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
-
-        architectRepo.deleteById(id);
-    }
-
-    private boolean isValidEnglishName(String englishName) {
-        return Pattern.matches("^[a-zA-Z\\s]+$", englishName);
-    }
-
-    private boolean isValidKoreanName(String koreanName) {
-        return Pattern.matches("^[가-힣0-9\\s]+$", koreanName);
     }
 }
