@@ -20,7 +20,7 @@ public class ArchitectService {
         this.architectRepo = architectRepo;
     }
 
-    public ArchitectDto addArchitect(ArchitectDto architectDto) throws InvalidDataException {
+    public ArchitectDto addArchitect(ArchitectDto architectDto) {
         if (architectDto.getName() == null) {
             throw new InvalidDataException("Architect's name can't be null.");
         }
@@ -39,7 +39,7 @@ public class ArchitectService {
 
     }
 
-    public ArchitectDto getArchitect(Long id) throws InvalidDataException{
+    public ArchitectDto getArchitect(Long id) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null.");
         }
@@ -50,7 +50,7 @@ public class ArchitectService {
         return new ArchitectDto(architect);
     }
 
-    public ArchitectDto putArchitect(Long id, ArchitectDto architectDto) throws InvalidDataException {
+    public ArchitectDto putArchitect(Long id, ArchitectDto architectDto) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null.");
         }
@@ -60,7 +60,7 @@ public class ArchitectService {
         return new ArchitectDto(saved);
     }
 
-    public void deleteArchitect(Long id) throws InvalidDataException {
+    public void deleteArchitect(Long id) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null.");
         }

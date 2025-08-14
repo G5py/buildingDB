@@ -30,7 +30,7 @@ public class BuildingController {
     }
 
     @PostMapping
-    public ResponseEntity<BuildingDto> postBuilding(@RequestBody BuildingDto buildingDto) throws InvalidDataException, URISyntaxException {
+    public ResponseEntity<BuildingDto> postBuilding(@RequestBody BuildingDto buildingDto) throws URISyntaxException {
         BuildingDto resultBuildingDto = buildingService.addBuilding(buildingDto);
 
         HttpHeaders headers = new HttpHeaders();
@@ -41,25 +41,25 @@ public class BuildingController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BuildingDto getBuilding(@PathVariable Long id) throws InvalidDataException {
+    public BuildingDto getBuilding(@PathVariable Long id) {
         return buildingService.getBuilding(id);
     }
 
     @GetMapping("/{id}/tag")
     @ResponseStatus(HttpStatus.OK)
-    public List<TagDto> getBuildingTags(@PathVariable Long id) throws InvalidDataException {
+    public List<TagDto> getBuildingTags(@PathVariable Long id) {
         return categoryService.getTagsByBuildingId(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BuildingDto putBuilding(@PathVariable Long id, @RequestBody BuildingDto buildingDto) throws InvalidDataException {
+    public BuildingDto putBuilding(@PathVariable Long id, @RequestBody BuildingDto buildingDto) {
         return buildingService.putBuilding(id, buildingDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BuildingDto deleteBuilding(@PathVariable Long id) throws InvalidDataException {
+    public BuildingDto deleteBuilding(@PathVariable Long id) {
         buildingService.deleteBuilding(id);
         return BuildingDto.builder()
                 .id(id)

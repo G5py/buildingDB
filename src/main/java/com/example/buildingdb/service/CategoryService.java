@@ -30,7 +30,7 @@ public class CategoryService {
         this.tagRepository = tagRepository;
     }
 
-    public List<BuildingDto> getBuildingsByTagId(Long tagId) throws InvalidDataException {
+    public List<BuildingDto> getBuildingsByTagId(Long tagId) {
         if (tagId == null) {
             throw new InvalidDataException("Id can't be null.");
         }
@@ -46,7 +46,7 @@ public class CategoryService {
                 .toList();
     }
 
-    public List<TagDto> getTagsByBuildingId(Long buildingId) throws InvalidDataException {
+    public List<TagDto> getTagsByBuildingId(Long buildingId) {
         if (buildingId == null) {
             throw new InvalidDataException("Id can't be null.");
         }

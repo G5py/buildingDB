@@ -25,7 +25,7 @@ public class ArchitectController {
     }
 
     @PostMapping
-    public ResponseEntity<ArchitectDto> postArchitect(@RequestBody ArchitectDto architectDto) throws InvalidDataException, URISyntaxException {
+    public ResponseEntity<ArchitectDto> postArchitect(@RequestBody ArchitectDto architectDto) throws URISyntaxException {
         ArchitectDto resultArchitectDto = architectService.addArchitect(architectDto);
 
         HttpHeaders headers = new HttpHeaders();
@@ -36,19 +36,19 @@ public class ArchitectController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ArchitectDto getArchitect(@PathVariable Long id) throws InvalidDataException {
+    public ArchitectDto getArchitect(@PathVariable Long id) {
         return architectService.getArchitect(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ArchitectDto putArchitect(@PathVariable Long id, @RequestBody ArchitectDto architectDto) throws InvalidDataException {
+    public ArchitectDto putArchitect(@PathVariable Long id, @RequestBody ArchitectDto architectDto) {
         return architectService.putArchitect(id, architectDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ArchitectDto deleteArchitect(@PathVariable Long id) throws InvalidDataException {
+    public ArchitectDto deleteArchitect(@PathVariable Long id) {
         architectService.deleteArchitect(id);
         return ArchitectDto.builder().id(id).build();
     }

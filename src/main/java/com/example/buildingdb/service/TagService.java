@@ -29,7 +29,7 @@ public class TagService {
         return new TagDto(newTag);
     }
 
-    public TagDto getTag(Long id) throws InvalidDataException {
+    public TagDto getTag(Long id) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null.");
         }
@@ -40,7 +40,7 @@ public class TagService {
         return new TagDto(tag);
     }
 
-    public TagDto putTag(Long id, TagDto tagDto) throws InvalidDataException {
+    public TagDto putTag(Long id, TagDto tagDto) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null.");
         }
@@ -53,7 +53,7 @@ public class TagService {
         return new TagDto(saved);
     }
 
-    public void deleteTag(Long id) throws InvalidDataException {
+    public void deleteTag(Long id) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null.");
         }

@@ -23,7 +23,7 @@ public class BuildingService {
         this.buildingRepository  = buildingRepository;
     }
 
-    public BuildingDto addBuilding(BuildingDto buildingDto) throws InvalidDataException {
+    public BuildingDto addBuilding(BuildingDto buildingDto) {
         if (buildingDto.getName() == null) {
             throw new InvalidDataException("Building's name can't be null.");
         }
@@ -37,7 +37,7 @@ public class BuildingService {
         return new BuildingDto(buildingRepository.save(buildingDto.toBuildingEntity(architect)));
     }
 
-    public BuildingDto getBuilding(Long id) throws InvalidDataException {
+    public BuildingDto getBuilding(Long id) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null.");
         }
@@ -47,7 +47,7 @@ public class BuildingService {
         return new BuildingDto(building);
     }
 
-    public BuildingDto putBuilding(Long id, BuildingDto buildingDto) throws InvalidDataException {
+    public BuildingDto putBuilding(Long id, BuildingDto buildingDto) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null");
         }
@@ -63,7 +63,7 @@ public class BuildingService {
         return new BuildingDto(saved);
     }
 
-    public void deleteBuilding(Long id) throws InvalidDataException {
+    public void deleteBuilding(Long id) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null");
         }

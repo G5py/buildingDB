@@ -31,7 +31,7 @@ public class TagController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<TagDto> postTag(@RequestBody TagDto tagDto) throws InvalidDataException, URISyntaxException {
+    public ResponseEntity<TagDto> postTag(@RequestBody TagDto tagDto) throws URISyntaxException {
         TagDto resultTagDto = tagService.addTag(tagDto);
 
         HttpHeaders headers = new HttpHeaders();
@@ -42,25 +42,25 @@ public class TagController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TagDto getTag(@PathVariable Long id) throws InvalidDataException {
+    public TagDto getTag(@PathVariable Long id) {
         return tagService.getTag(id);
     }
 
     @GetMapping("/{id}/building")
     @ResponseStatus(HttpStatus.OK)
-    public List<BuildingDto> getTaggedBuildings(@PathVariable Long id) throws InvalidDataException {
+    public List<BuildingDto> getTaggedBuildings(@PathVariable Long id) {
         return categoryService.getBuildingsByTagId(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TagDto putTag(@PathVariable Long id, @RequestBody TagDto tagDto) throws InvalidDataException {
+    public TagDto putTag(@PathVariable Long id, @RequestBody TagDto tagDto) {
         return tagService.putTag(id, tagDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TagDto deleteTag(@PathVariable Long id) throws InvalidDataException {
+    public TagDto deleteTag(@PathVariable Long id) {
         tagService.deleteTag(id);
 
         return TagDto.builder()
