@@ -2,7 +2,6 @@ package com.example.buildingdb.controller;
 
 import com.example.buildingdb.dto.BuildingDto;
 import com.example.buildingdb.dto.TagDto;
-import com.example.buildingdb.exception.InvalidDataException;
 import com.example.buildingdb.service.CategoryService;
 import com.example.buildingdb.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
