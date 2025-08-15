@@ -8,16 +8,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.ReflectionTestUtils.invokeMethod;
 
 class ArchitectServiceTest {
 
@@ -32,7 +32,7 @@ class ArchitectServiceTest {
     })
     void testIsValidEnglishName(String name, boolean expected) {
         ArchitectService architectService = new ArchitectService(null);
-        boolean actual = ReflectionTestUtils.invokeMethod(architectService, "isValidEnglishName", name);
+        boolean actual = invokeMethod(architectService, "isValidEnglishName", name);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -47,7 +47,7 @@ class ArchitectServiceTest {
     })
     void testIsValidKoreanName(String name, boolean expected) {
         ArchitectService architectService = new ArchitectService(null);
-        boolean actual = ReflectionTestUtils.invokeMethod(architectService, "isValidKoreanName", name);
+        boolean actual = invokeMethod(architectService, "isValidKoreanName", name);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -99,5 +99,38 @@ class ArchitectServiceTest {
                 new ArchitectDto(null, "가asd sadff", "유효한 이름"),              // 유효하지 않은 name인 경우
                 new ArchitectDto(null, "Not Existing Name", "d유효하지 않은 이름"), // 유효하지 않은 koreanName인 경우
                 new ArchitectDto(null, "Existing Name", "유효한 이름"));           // 이미 존재하는 name인 경우
+    }
+
+    @Test
+    void testGetArchitect() {
+        // given
+        Long id = 1L;
+        Architect architect = new Architect("Louis Kahn");
+
+        ArchitectRepository mockRepo = mock(ArchitectRepository.class);
+        when(mockRepo.findById(id))
+                .thenReturn(Optional.of(architect));
+
+        ArchitectService service = new ArchitectService(mockRepo);
+
+        // when
+        ArchitectDto actual = service.getArchitect(id);
+
+        // then
+        ArchitectDto expected = new ArchitectDto(architect);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void testValidateArchitectDtoKoreanNameNull() {
+        // given
+        ArchitectService architectService = new ArchitectService(null);
+        ArchitectDto dto = new ArchitectDto(1L, "Valid Name", null);
+
+        // when
+        invokeMethod(architectService, "validateArchitectDto", dto);
+
+        // then
+        // it is successful when there is no any thrown exception.
     }
 }
