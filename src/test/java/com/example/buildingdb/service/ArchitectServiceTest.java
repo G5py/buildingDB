@@ -69,15 +69,10 @@ class ArchitectServiceTest {
         ArchitectService archService = new ArchitectService(mockRepo);
 
         // when
-        try {
-            ArchitectDto result = archService.addArchitect(dto);
+        ArchitectDto result = archService.addArchitect(dto);
 
-            // then
-            assertThat(result).isEqualTo(dto);
-
-        } catch (InvalidDataException e) {
-            fail("InvalidDataException occurred.");
-        }
+        // then
+        assertThat(result).isEqualTo(dto);
     }
 
     @ParameterizedTest
