@@ -33,8 +33,7 @@ public class CategoryService {
     public List<BuildingDto> getBuildingsByTagId(Long tagId) {
         validateId(tagId);
 
-        Optional<Tag> tagOpt = tagRepository.findById(tagId);
-        Tag tag = tagOpt.orElseThrow(() -> new InvalidDataException("Tag id is invalid."));
+        Tag tag = tagRepository.findByIdOrThrow(tagId);
 
         List<Category> resultCategories = categoryRepository.findByTag(tag);
 
@@ -47,8 +46,7 @@ public class CategoryService {
     public List<TagDto> getTagsByBuildingId(Long buildingId) {
         validateId(buildingId);
 
-        Optional<Building> buildingsOpt = buildingRepository.findById(buildingId);
-        Building building = buildingsOpt.orElseThrow(() -> new InvalidDataException("Building id is invalid."));
+        Building building = buildingRepository.findByIdOrThrow(buildingId);
 
         List<Category> resultCategories = categoryRepository.findByBuilding(building);
 

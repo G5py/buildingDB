@@ -26,17 +26,14 @@ public class BuildingService {
     public BuildingDto addBuilding(BuildingDto buildingDto) {
         validateBuildingDto(buildingDto);
 
-        Optional<Architect> architectOpt = architectRepository.findByName(buildingDto.getArchitectName());
-        Architect architect = architectOpt.orElseThrow(() -> new InvalidDataException("Architect name is invalid."));
-
+        Architect architect = architectRepository.findByNameOrThrow(buildingDto.getArchitectName());
         return new BuildingDto(buildingRepository.save(buildingDto.toBuildingEntity(architect)));
     }
 
     public BuildingDto getBuilding(Long id) {
         validateId(id);
 
-        Building building = buildingRepository.findById(id).orElseThrow(() -> new InvalidDataException("Id is invalid."));
-
+        Building building = buildingRepository.findByIdOrThrow(id);
         return new BuildingDto(building);
     }
 
@@ -44,9 +41,7 @@ public class BuildingService {
         validateId(id);
         validateBuildingDto(buildingDto);
 
-        Optional<Architect> architectOpt = architectRepository.findByName(buildingDto.getArchitectName());
-        Architect architect = architectOpt.orElseThrow(() -> new InvalidDataException("Architect's name is invalid."));
-
+        Architect architect = architectRepository.findByNameOrThrow(buildingDto.getArchitectName());
         Building saved = buildingRepository.save(buildingDto.toBuildingEntity(architect));
 
         return new BuildingDto(saved);

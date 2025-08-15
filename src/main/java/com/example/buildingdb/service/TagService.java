@@ -23,16 +23,13 @@ public class TagService {
         validateTagDto(tagDto);
 
         Tag newTag = tagRepository.save(tagDto.toTagEntity());
-
         return new TagDto(newTag);
     }
 
     public TagDto getTag(Long id) {
         validateId(id);
 
-        Optional<Tag> tagOpt = tagRepository.findById(id);
-        Tag tag = tagOpt.orElseThrow(() -> new InvalidDataException("Id is invalid."));
-
+        Tag tag = tagRepository.findByIdOrThrow(id);
         return new TagDto(tag);
     }
 

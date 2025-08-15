@@ -34,9 +34,7 @@ public class ArchitectService {
     public ArchitectDto getArchitect(Long id) {
         validateId(id);
 
-        Optional<Architect> archOpt = architectRepo.findById(id);
-        Architect architect = archOpt.orElseThrow(() -> new InvalidDataException("Invalid architect id."));
-
+        Architect architect = architectRepo.findByIdOrThrow(id);
         return new ArchitectDto(architect);
     }
 
