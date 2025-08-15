@@ -7,8 +7,6 @@ import com.example.buildingdb.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class TagService {
 

@@ -7,7 +7,6 @@ import com.example.buildingdb.repository.ArchitectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 
