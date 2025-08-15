@@ -12,28 +12,28 @@ import java.util.regex.Pattern;
 
 @Service
 public class ArchitectService {
-    private final ArchitectRepository architectRepo;
+    private final ArchitectRepository architectRepository;
 
     @Autowired
-    public ArchitectService(ArchitectRepository architectRepo) {
-        this.architectRepo = architectRepo;
+    public ArchitectService(ArchitectRepository architectRepository) {
+        this.architectRepository = architectRepository;
     }
 
     public ArchitectDto addArchitect(ArchitectDto architectDto) {
         validateArchitectDto(architectDto);
 
-        if (architectRepo.existsByName(architectDto.getName())) {
+        if (architectRepository.existsByName(architectDto.getName())) {
             throw new InvalidDataException("The architect's name already exists.");
         }
 
-        return new ArchitectDto(architectRepo.save(architectDto.toArchitectEntity()));
+        return new ArchitectDto(architectRepository.save(architectDto.toArchitectEntity()));
 
     }
 
     public ArchitectDto getArchitect(Long id) {
         validateId(id);
 
-        Architect architect = architectRepo.findByIdOrThrow(id);
+        Architect architect = architectRepository.findByIdOrThrow(id);
         return new ArchitectDto(architect);
     }
 
@@ -41,7 +41,7 @@ public class ArchitectService {
         validateId(id);
         validateArchitectDto(architectDto);
 
-        Architect saved = architectRepo.save(architectDto.toArchitectEntity());
+        Architect saved = architectRepository.save(architectDto.toArchitectEntity());
 
         return new ArchitectDto(saved);
     }
@@ -49,7 +49,7 @@ public class ArchitectService {
     public void deleteArchitect(Long id) {
         validateId(id);
 
-        architectRepo.deleteById(id);
+        architectRepository.deleteById(id);
     }
 
 
