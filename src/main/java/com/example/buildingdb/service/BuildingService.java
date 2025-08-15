@@ -59,18 +59,26 @@ public class BuildingService {
     }
 
 
+    private void validateBuildingDto(BuildingDto buildingDto) {
+        validateBuildingName(buildingDto.getName());
+        validateArchitectName(buildingDto.getArchitectName());
+    }
+
     private void validateId(Long id) {
         if (id == null) {
             throw new InvalidDataException("Id can't be null.");
         }
     }
 
-    private void validateBuildingDto(BuildingDto buildingDto) {
-        if (buildingDto.getName() == null) {
-            throw new InvalidDataException("Building's name can't be null.");
-        }
-        if (buildingDto.getArchitectName() == null) {
+    private void validateArchitectName(String architectName) {
+        if (architectName == null) {
             throw new InvalidDataException("Architect name can't be null.");
+        }
+    }
+
+    private void validateBuildingName(String buildingName) {
+        if (buildingName == null) {
+            throw new InvalidDataException("Building's name can't be null.");
         }
     }
 }
