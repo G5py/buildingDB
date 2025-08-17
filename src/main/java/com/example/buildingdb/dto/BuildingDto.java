@@ -19,8 +19,8 @@ public class BuildingDto {
     private Long id;
     private String name;
     private String koreanName;
-    private double coordinateX;
-    private double coordinateY;
+    private Double coordinateX;
+    private Double coordinateY;
     private LocalDate completeDate;
     private String architectName;
 
@@ -29,23 +29,39 @@ public class BuildingDto {
         this.id = building.getId();
         this.name = building.getName();
         this.koreanName = building.getKoreanName();
-        this.coordinateX = building.getCoordinates().getX();
-        this.coordinateY = building.getCoordinates().getY();
         this.completeDate = building.getCompletedDate();
         this.architectName = building.getArchitect().getName();
+
+        if (building.getCoordinates() != null) {
+            this.coordinateX = building.getCoordinates().getX();
+            this.coordinateY = building.getCoordinates().getY();
+        } else {
+            this.coordinateX = null;
+            this.coordinateY = null;
+        }
 
     }
 
     public Building toBuildingEntity(Architect architect) {
         GeometryFactory geoFac = new GeometryFactory();
 
-        return Building.builder()
+        Building building = Building.builder()
                 .name(this.name)
                 .koreanName(this.name)
-                .coordinates(geoFac.createPoint(new Coordinate(this.coordinateX, this.coordinateY)))
+                .coordinates(null)
                 .completedDate(this.completeDate)
                 .architect(architect)
                 .build();
+
+        if (!isCoordinatesNull()) {
+            building.setCoordinates(geoFac.createPoint(new Coordinate(this.coordinateX, this.coordinateY)));
+        }
+
+        return building;
+    }
+
+    private boolean isCoordinatesNull() {
+        return this.coordinateX == null || this.coordinateY == null;
     }
 
 }
