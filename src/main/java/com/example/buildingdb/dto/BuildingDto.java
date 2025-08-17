@@ -29,17 +29,15 @@ public class BuildingDto {
         this.id = building.getId();
         this.name = building.getName();
         this.koreanName = building.getKoreanName();
+        this.coordinateX = null;
+        this.coordinateY = null;
         this.completeDate = building.getCompletedDate();
         this.architectName = building.getArchitect().getName();
 
         if (building.getCoordinates() != null) {
             this.coordinateX = building.getCoordinates().getX();
             this.coordinateY = building.getCoordinates().getY();
-        } else {
-            this.coordinateX = null;
-            this.coordinateY = null;
         }
-
     }
 
     public Building toBuildingEntity(Architect architect) {
