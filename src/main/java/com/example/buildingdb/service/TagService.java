@@ -17,7 +17,7 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public TagDto addTag(TagDto tagDto) throws InvalidDataException {
+    public TagDto addTag(TagDto tagDto) {
         validateTagDto(tagDto);
 
         Tag newTag = tagRepository.save(tagDto.toTagEntity());
