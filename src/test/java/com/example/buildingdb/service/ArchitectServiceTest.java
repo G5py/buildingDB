@@ -108,8 +108,8 @@ class ArchitectServiceTest {
         Architect architect = new Architect("Louis Kahn");
 
         ArchitectRepository mockRepo = mock(ArchitectRepository.class);
-        when(mockRepo.findById(id))
-                .thenReturn(Optional.of(architect));
+        when(mockRepo.findByIdOrThrow(id))
+                .thenReturn(architect);
 
         ArchitectService service = new ArchitectService(mockRepo);
 
