@@ -55,10 +55,32 @@ public class CategoryService {
                 .toList();
     }
 
+    public void setTagOnBuilding(Long buildingId, Long tagId) {
+        validateId(buildingId);
+        validateId(tagId);
+        validateCategoryExistence(buildingId, tagId);
+
+        Building building = buildingRepository.findByIdOrThrow(buildingId);
+        Tag tag = tagRepository.findByIdOrThrow(tagId);
+
+        Category category = new Category(null, building, tag);
+        categoryRepository.save(category);
+    }
+
 
     private void validateId(Long tagId) {
         if (tagId == null) {
             throw new InvalidDataException("Id can't be null.");
         }
+    }
+
+    private void validateCategoryExistence(Long buildingId, Long tagId) {
+        if (existsCategory(buildingId, tagId)) {
+            throw new InvalidDataException("The tag is already set on the building.");
+        }
+    }
+
+    private boolean existsCategory(Long buildingId, Long tagId) {
+        return categoryRepository.existsByBuildingIdAndTagId(buildingId, tagId);
     }
 }
