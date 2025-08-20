@@ -44,12 +44,6 @@ public class BuildingController {
         return buildingService.getBuilding(id);
     }
 
-    @GetMapping("/{id}/tag")
-    @ResponseStatus(HttpStatus.OK)
-    public List<TagDto> getBuildingTags(@PathVariable Long id) {
-        return categoryService.getTagsByBuildingId(id);
-    }
-
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BuildingDto putBuilding(@PathVariable Long id, @RequestBody BuildingDto buildingDto) {
@@ -63,5 +57,17 @@ public class BuildingController {
         return BuildingDto.builder()
                 .id(id)
                 .build();
+    }
+
+
+    @GetMapping("/{id}/tag")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TagDto> getBuildingTags(@PathVariable Long id) {
+        return categoryService.getTagsByBuildingId(id);
+    }
+
+    @PostMapping("/{buildingId}/tag")
+    public void postTagOnBuilding(@PathVariable Long buildingId, @RequestBody Long tagId) {
+        categoryService.addTagOnBuilding(buildingId, tagId);
     }
 }
