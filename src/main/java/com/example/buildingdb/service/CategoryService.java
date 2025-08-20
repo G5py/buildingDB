@@ -55,7 +55,7 @@ public class CategoryService {
                 .toList();
     }
 
-    public void setTagOnBuilding(Long buildingId, Long tagId) {
+    public void addTagOnBuilding(Long buildingId, Long tagId) {
         validateId(buildingId);
         validateId(tagId);
         validateCategoryExistence(buildingId, tagId);
