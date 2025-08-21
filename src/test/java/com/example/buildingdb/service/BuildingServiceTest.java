@@ -11,8 +11,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.ReflectionTestUtils.invokeMethod;
 
 class BuildingServiceTest {
+
+    @Test
+    void testValidateId_valid() {
+        BuildingService buildingService = new BuildingService(null, null);
+        invokeMethod(buildingService, "validateId", 1L);
+    }
+
+    @Test
+    void testValidateArchitectName_valid() {
+        BuildingService buildingService = new BuildingService(null, null);
+        invokeMethod(buildingService, "validateArchitectName", "valid name");
+    }
 
     @Test
     void testAddBuilding() {
