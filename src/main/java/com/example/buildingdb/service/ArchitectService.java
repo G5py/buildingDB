@@ -19,8 +19,8 @@ public class ArchitectService {
         this.architectRepository = architectRepository;
     }
 
-    public ArchitectDto addArchitect(ArchitectDto architectDto) {
-        validateArchitectDto(architectDto);
+    public ArchitectDto addArchitect(ArchitectDto architectDto)  {
+        ValidationUtil.validateArchitectDto(architectDto);
 
         if (architectRepository.existsByName(architectDto.getName())) {
             throw new InvalidDataException("The architect's name already exists.");
@@ -31,15 +31,15 @@ public class ArchitectService {
     }
 
     public ArchitectDto getArchitect(Long id) {
-        validateId(id);
+        ValidationUtil.validateId(id);
 
         Architect architect = architectRepository.findByIdOrThrow(id);
         return new ArchitectDto(architect);
     }
 
     public ArchitectDto putArchitect(Long id, ArchitectDto architectDto) {
-        validateId(id);
-        validateArchitectDto(architectDto);
+        ValidationUtil.validateId(id);
+        ValidationUtil.validateArchitectDto(architectDto);
 
         Architect saved = architectRepository.save(architectDto.toArchitectEntity());
 
@@ -47,36 +47,8 @@ public class ArchitectService {
     }
 
     public void deleteArchitect(Long id) {
-        validateId(id);
+        ValidationUtil.validateId(id);
 
         architectRepository.deleteById(id);
-    }
-
-
-    private boolean isValidEnglishName(String englishName) {
-        return Pattern.matches("^[a-zA-Z\\s]+$", englishName);
-    }
-
-    private boolean isValidKoreanName(String koreanName) {
-        return Pattern.matches("^[가-힣0-9\\s]+$", koreanName);
-    }
-
-    private void validateId(Long id) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
-    }
-
-    private void validateArchitectDto(ArchitectDto architectDto) {
-        if (architectDto.getName() == null) {
-            throw new InvalidDataException("Architect's name can't be null.");
-        }
-        if (!isValidEnglishName(architectDto.getName())) {
-            throw new InvalidDataException("Architect's name contains non-english characters.");
-        }
-        if (architectDto.getKoreanName() != null &&
-                !isValidKoreanName(architectDto.getKoreanName())) {
-            throw new InvalidDataException("Architect's korean name is invalid.");
-        }
     }
 }

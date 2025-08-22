@@ -119,17 +119,4 @@ class ArchitectServiceTest {
         ArchitectDto expected = new ArchitectDto(architect);
         assertThat(actual).isEqualTo(expected);
     }
-
-    @Test
-    void testValidateArchitectDtoKoreanNameNull() {
-        // given
-        ArchitectService architectService = new ArchitectService(null);
-        ArchitectDto dto = new ArchitectDto(1L, "Valid Name", null);
-
-        // when
-        invokeMethod(architectService, "validateArchitectDto", dto);
-
-        // then
-        // it is successful when there is no any thrown exception.
-    }
 }

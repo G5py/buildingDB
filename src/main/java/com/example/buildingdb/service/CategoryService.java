@@ -30,7 +30,7 @@ public class CategoryService {
     }
 
     public List<BuildingDto> getBuildingsByTagId(Long tagId) {
-        validateId(tagId);
+        ValidationUtil.validateId(tagId);
 
         Tag tag = tagRepository.findByIdOrThrow(tagId);
 
@@ -43,7 +43,7 @@ public class CategoryService {
     }
 
     public List<TagDto> getTagsByBuildingId(Long buildingId) {
-        validateId(buildingId);
+        ValidationUtil.validateId(buildingId);
 
         Building building = buildingRepository.findByIdOrThrow(buildingId);
 
@@ -56,8 +56,8 @@ public class CategoryService {
     }
 
     public void addTagOnBuilding(Long buildingId, Long tagId) {
-        validateId(buildingId);
-        validateId(tagId);
+        ValidationUtil.validateId(buildingId);
+        ValidationUtil.validateId(tagId);
         validateCategoryExistence(buildingId, tagId);
 
         Building building = buildingRepository.findByIdOrThrow(buildingId);
@@ -67,12 +67,6 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
-
-    private void validateId(Long tagId) {
-        if (tagId == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
-    }
 
     private void validateCategoryExistence(Long buildingId, Long tagId) {
         if (existsCategory(buildingId, tagId)) {

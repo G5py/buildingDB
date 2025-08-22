@@ -22,22 +22,22 @@ public class BuildingService {
     }
 
     public BuildingDto addBuilding(BuildingDto buildingDto) {
-        validateBuildingDto(buildingDto);
+        ValidationUtil.validateBuildingDto(buildingDto);
 
         Architect architect = architectRepository.findByNameOrThrow(buildingDto.getArchitectName());
         return new BuildingDto(buildingRepository.save(buildingDto.toBuildingEntity(architect)));
     }
 
     public BuildingDto getBuilding(Long id) {
-        validateId(id);
+        ValidationUtil.validateId(id);
 
         Building building = buildingRepository.findByIdOrThrow(id);
         return new BuildingDto(building);
     }
 
     public BuildingDto putBuilding(Long id, BuildingDto buildingDto) {
-        validateId(id);
-        validateBuildingDto(buildingDto);
+        ValidationUtil.validateId(id);
+        ValidationUtil.validateBuildingDto(buildingDto);
 
         Architect architect = architectRepository.findByNameOrThrow(buildingDto.getArchitectName());
         Building saved = buildingRepository.save(buildingDto.toBuildingEntity(architect));
@@ -46,32 +46,8 @@ public class BuildingService {
     }
 
     public void deleteBuilding(Long id) {
-        validateId(id);
+        ValidationUtil.validateId(id);
 
         buildingRepository.deleteById(id);
-    }
-
-
-    private void validateBuildingDto(BuildingDto buildingDto) {
-        validateBuildingName(buildingDto.getName());
-        validateArchitectName(buildingDto.getArchitectName());
-    }
-
-    private void validateId(Long id) {
-        if (id == null) {
-            throw new InvalidDataException("Id can't be null.");
-        }
-    }
-
-    private void validateArchitectName(String architectName) {
-        if (architectName == null) {
-            throw new InvalidDataException("Architect name can't be null.");
-        }
-    }
-
-    private void validateBuildingName(String buildingName) {
-        if (buildingName == null) {
-            throw new InvalidDataException("Building's name can't be null.");
-        }
     }
 }
