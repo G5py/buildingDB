@@ -3,7 +3,6 @@ package com.example.buildingdb.service;
 import com.example.buildingdb.dto.BuildingDto;
 import com.example.buildingdb.entity.Architect;
 import com.example.buildingdb.entity.Building;
-import com.example.buildingdb.exception.InvalidDataException;
 import com.example.buildingdb.repository.ArchitectRepository;
 import com.example.buildingdb.repository.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
