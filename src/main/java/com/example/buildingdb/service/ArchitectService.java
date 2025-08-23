@@ -4,6 +4,7 @@ import com.example.buildingdb.dto.ArchitectDto;
 import com.example.buildingdb.entity.Architect;
 import com.example.buildingdb.exception.InvalidDataException;
 import com.example.buildingdb.repository.ArchitectRepository;
+import com.example.buildingdb.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

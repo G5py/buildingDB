@@ -1,6 +1,7 @@
 package com.example.buildingdb.service;
 
 import com.example.buildingdb.dto.ArchitectDto;
+import com.example.buildingdb.util.ValidationUtil;
 import org.junit.jupiter.api.Test;
 
 class ValidationUtilTest {

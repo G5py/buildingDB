@@ -9,6 +9,7 @@ import com.example.buildingdb.exception.InvalidDataException;
 import com.example.buildingdb.repository.BuildingRepository;
 import com.example.buildingdb.repository.CategoryRepository;
 import com.example.buildingdb.repository.TagRepository;
+import com.example.buildingdb.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +59,7 @@ public class CategoryService {
     public void addTagOnBuilding(Long buildingId, Long tagId) {
         ValidationUtil.validateId(buildingId);
         ValidationUtil.validateId(tagId);
-        validateCategoryExistence(buildingId, tagId);
+        validateCategoryDuplicated(buildingId, tagId);
 
         Building building = buildingRepository.findByIdOrThrow(buildingId);
         Tag tag = tagRepository.findByIdOrThrow(tagId);
@@ -68,7 +69,7 @@ public class CategoryService {
     }
 
 
-    private void validateCategoryExistence(Long buildingId, Long tagId) {
+    private void validateCategoryDuplicated(Long buildingId, Long tagId) {
         if (existsCategory(buildingId, tagId)) {
             throw new InvalidDataException("The tag is already set on the building.");
         }

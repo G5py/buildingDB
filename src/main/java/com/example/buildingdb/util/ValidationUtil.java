@@ -1,4 +1,4 @@
-package com.example.buildingdb.service;
+package com.example.buildingdb.util;
 
 import com.example.buildingdb.dto.ArchitectDto;
 import com.example.buildingdb.dto.BuildingDto;

@@ -4,6 +4,7 @@ import com.example.buildingdb.dto.TagDto;
 import com.example.buildingdb.entity.Tag;
 import com.example.buildingdb.exception.InvalidDataException;
 import com.example.buildingdb.repository.TagRepository;
+import com.example.buildingdb.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +43,18 @@ public class TagService {
 
     public void deleteTag(Long id) {
         ValidationUtil.validateId(id);
-        if (!tagRepository.existsById(id)) {
-            throw new InvalidDataException("Id is invalid.");
-        }
+        validateTagExistenceById(id);
 
         tagRepository.deleteById(id);
+    }
+
+    private void validateTagExistenceById(Long id) {
+        if (!existsTag(id)) {
+            throw new InvalidDataException("Id is invalid.");
+        }
+    }
+
+    private boolean existsTag(Long id) {
+        return !tagRepository.existsById(id);
     }
 }
