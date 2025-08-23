@@ -32,7 +32,10 @@ public class BuildingDto {
         this.coordinateX = null;
         this.coordinateY = null;
         this.completeDate = building.getCompletedDate();
-        this.architectName = building.getArchitect().getName();
+
+        if (building.getArchitect() != null) {
+            this.architectName = building.getArchitect().getName();
+        }
 
         if (building.getCoordinates() != null) {
             this.coordinateX = building.getCoordinates().getX();
