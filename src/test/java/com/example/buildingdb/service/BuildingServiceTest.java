@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 
 class BuildingServiceTest {
     @Test
-    void testAddBuilding() {
+    void testAddBuilding_valid() {
         // given
         BuildingDto inputDto = BuildingDto.builder()
                 .name("Church on the Water")
@@ -56,14 +56,30 @@ class BuildingServiceTest {
     }
 
     @Test
-    void getBuilding() {
+    void testGetBuilding_valid() {
+        // given
+        Building building = Building.builder()
+                .id(1L)
+                .name("Church on the Water")
+                .build();
+
+        BuildingRepository mockRepo = mock(BuildingRepository.class);
+        when(mockRepo.findByIdOrThrow(1L))
+                .thenReturn(building);
+
+        BuildingService service = new BuildingService(null, mockRepo);
+
+        // when
+        BuildingDto actual = service.getBuilding(1L);
+
+        // then
+        assertThat(actual)
+                .usingRecursiveComparison()
+                .isEqualTo(new BuildingDto(building));
+
     }
 
     @Test
     void putBuilding() {
-    }
-
-    @Test
-    void deleteBuilding() {
     }
 }
