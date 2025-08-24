@@ -12,6 +12,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     List<Category> findByBuilding(Building building);
 
+    Category findByBuildingIdAndTagId(Long buildingId, Long tagId);
+
     boolean existsByBuildingAndTag(Building building, Tag tag);
     boolean existsByBuildingIdAndTagId(Long buildingId, Long tagId);
 }

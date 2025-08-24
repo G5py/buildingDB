@@ -1,6 +1,7 @@
 package com.example.buildingdb.service;
 
 import com.example.buildingdb.dto.BuildingDto;
+import com.example.buildingdb.dto.BuildingTagResponse;
 import com.example.buildingdb.dto.TagDto;
 import com.example.buildingdb.entity.Building;
 import com.example.buildingdb.entity.Category;
@@ -27,7 +28,21 @@ public class CategoryService {
     public CategoryService(CategoryRepository categoryRepository, BuildingRepository buildingRepository, TagRepository tagRepository) {
         this.categoryRepository = categoryRepository;
         this.buildingRepository = buildingRepository;
-        this.tagRepository = tagRepository;
+        this.tagRepository      = tagRepository;
+    }
+
+    public BuildingTagResponse addTagOnBuilding(Long buildingId, Long tagId) {
+        ValidationUtil.validateId(buildingId);
+        ValidationUtil.validateId(tagId);
+        validateCategoryDuplicated(buildingId, tagId);
+
+        Building building = buildingRepository.findByIdOrThrow(buildingId);
+        Tag tag = tagRepository.findByIdOrThrow(tagId);
+
+        Category category = new Category(null, building, tag);
+        categoryRepository.save(category);
+
+        return getTagsByBuildingId(buildingId);
     }
 
     public List<BuildingDto> getBuildingsByTagId(Long tagId) {
@@ -43,35 +58,42 @@ public class CategoryService {
                 .toList();
     }
 
-    public List<TagDto> getTagsByBuildingId(Long buildingId) {
+    public BuildingTagResponse getTagsByBuildingId(Long buildingId) {
         ValidationUtil.validateId(buildingId);
 
         Building building = buildingRepository.findByIdOrThrow(buildingId);
 
         List<Category> resultCategories = categoryRepository.findByBuilding(building);
 
-        return resultCategories.stream()
+        List<TagDto> tags = resultCategories.stream()
                 .map(Category::getTag)
                 .map(TagDto::new)
                 .toList();
+
+        return new BuildingTagResponse(buildingId, building.getName(), tags);
     }
 
-    public void addTagOnBuilding(Long buildingId, Long tagId) {
+    public BuildingTagResponse untagBuilding(Long buildingId, Long tagId) {
         ValidationUtil.validateId(buildingId);
         ValidationUtil.validateId(tagId);
-        validateCategoryDuplicated(buildingId, tagId);
+        validateCategoryExistence(buildingId, tagId);
 
-        Building building = buildingRepository.findByIdOrThrow(buildingId);
-        Tag tag = tagRepository.findByIdOrThrow(tagId);
+        Category category = categoryRepository.findByBuildingIdAndTagId(buildingId, tagId);
+        categoryRepository.delete(category);
 
-        Category category = new Category(null, building, tag);
-        categoryRepository.save(category);
+        return getTagsByBuildingId(buildingId);
     }
 
 
     private void validateCategoryDuplicated(Long buildingId, Long tagId) {
         if (existsCategory(buildingId, tagId)) {
             throw new InvalidDataException("The tag is already set on the building.");
+        }
+    }
+
+    private void validateCategoryExistence(Long buildingId, Long tagId) {
+        if (!existsCategory(buildingId, tagId)) {
+            throw new InvalidDataException("The tag is not set on the building.");
         }
     }
 

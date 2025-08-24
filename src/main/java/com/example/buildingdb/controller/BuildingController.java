@@ -1,7 +1,7 @@
 package com.example.buildingdb.controller;
 
 import com.example.buildingdb.dto.BuildingDto;
-import com.example.buildingdb.dto.TagDto;
+import com.example.buildingdb.dto.BuildingTagResponse;
 import com.example.buildingdb.service.BuildingService;
 import com.example.buildingdb.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/buildings")
@@ -62,12 +61,17 @@ public class BuildingController {
 
     @GetMapping("/{id}/tag")
     @ResponseStatus(HttpStatus.OK)
-    public List<TagDto> getBuildingTags(@PathVariable Long id) {
+    public BuildingTagResponse getBuildingTags(@PathVariable Long id) {
         return categoryService.getTagsByBuildingId(id);
     }
 
     @PostMapping("/{buildingId}/tag")
-    public void postTagOnBuilding(@PathVariable Long buildingId, @RequestBody Long tagId) {
-        categoryService.addTagOnBuilding(buildingId, tagId);
+    public BuildingTagResponse postTagOnBuilding(@PathVariable Long buildingId, @RequestBody Long tagId) {
+        return categoryService.addTagOnBuilding(buildingId, tagId);
+    }
+
+    @DeleteMapping("/{buildingId}/{tagId}")
+    public BuildingTagResponse deleteTagOnBuilding(@PathVariable Long buildingId, @PathVariable Long tagId) {
+        return categoryService.untagBuilding(buildingId, tagId);
     }
 }

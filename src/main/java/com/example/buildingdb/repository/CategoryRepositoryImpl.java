@@ -12,6 +12,15 @@ public class CategoryRepositoryImpl {
         this.queryFactory = queryFactory;
     }
 
+    public Category findByBuildingIdAndTagId(Long buildingId, Long tagId) {
+        QCategory category = QCategory.category;
+
+        return queryFactory.selectFrom(category)
+                .where(category.building.id.eq(buildingId)
+                        .and(category.tag.id.eq(tagId)))
+                .fetchFirst();
+    }
+
     public boolean existsByBuildingAndTag(Building building, Tag tag) {
         QCategory category = QCategory.category;
 
@@ -24,17 +33,10 @@ public class CategoryRepositoryImpl {
     }
 
     public boolean existsByBuildingIdAndTagId(Long buildingId, Long tagId) {
-        QBuilding qBuilding = QBuilding.building;
-        QTag qTag = QTag.tag;
+        QCategory category = QCategory.category;
 
-        Building building = queryFactory.selectFrom(qBuilding)
-                .where(qBuilding.id.eq(buildingId))
-                .fetchFirst();
+        Category result = findByBuildingIdAndTagId(buildingId, tagId);
 
-        Tag tag = queryFactory.selectFrom(qTag)
-                .where(qTag.id.eq(tagId))
-                .fetchFirst();
-
-        return existsByBuildingAndTag(building, tag);
+        return result != null;
     }
 }
