@@ -33,8 +33,6 @@ public class CategoryRepositoryImpl {
     }
 
     public boolean existsByBuildingIdAndTagId(Long buildingId, Long tagId) {
-        QCategory category = QCategory.category;
-
         Category result = findByBuildingIdAndTagId(buildingId, tagId);
 
         return result != null;
