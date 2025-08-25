@@ -2,6 +2,7 @@ package com.example.buildingdb.service;
 
 import com.example.buildingdb.dto.BuildingDto;
 import com.example.buildingdb.dto.BuildingTagResponse;
+import com.example.buildingdb.dto.TagBuildingResponse;
 import com.example.buildingdb.dto.TagDto;
 import com.example.buildingdb.entity.Building;
 import com.example.buildingdb.entity.Category;
@@ -45,17 +46,19 @@ public class CategoryService {
         return getTagsByBuildingId(buildingId);
     }
 
-    public List<BuildingDto> getBuildingsByTagId(Long tagId) {
+    public TagBuildingResponse getBuildingsByTagId(Long tagId) {
         ValidationUtil.validateId(tagId);
 
         Tag tag = tagRepository.findByIdOrThrow(tagId);
 
         List<Category> resultCategories = categoryRepository.findByTag(tag);
 
-        return resultCategories.stream()
+        List<BuildingDto> buildings = resultCategories.stream()
                 .map(Category::getBuilding)
                 .map(BuildingDto::new)
                 .toList();
+
+        return new TagBuildingResponse(tag.getName(), tagId, buildings);
     }
 
     public BuildingTagResponse getTagsByBuildingId(Long buildingId) {
