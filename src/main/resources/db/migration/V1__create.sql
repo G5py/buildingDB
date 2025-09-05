@@ -34,6 +34,11 @@ create table CATEGORIES(
         on update cascade
 );
 
+create table API_KEYS (
+    id bigint primary key,
+    api_key varchar(60) unique not null
+);
+
 delimiter $$
 
 create trigger reject_insert_of_existing_category
