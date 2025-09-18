@@ -32,6 +32,7 @@ dependencies {
     implementation 'org.flywaydb:flyway-mysql'
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
 
@@ -46,6 +47,9 @@ sourceSets {
 
 configurations {
     querydsl.extendsFrom annotationProcessor
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
 
 tasks.named('test') {
