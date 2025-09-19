@@ -11,11 +11,11 @@ public interface ArchitectRepository extends JpaRepository<Architect, Long> {
     Optional<Architect> findByName(String name);
 
     default Architect findByNameOrThrow(String name) {
-        return findByName(name).orElseThrow(() -> new EntityNotFoundException("Architect is not found with such name."));
+        return findByName(name).orElseThrow(() -> new EntityNotFoundException("Architect is not found with such name. name : ".concat(name)));
     }
 
     default Architect findByIdOrThrow(Long id) {
-        return findById(id).orElseThrow(() -> new EntityNotFoundException("Architect is not found with such id."));
+        return findById(id).orElseThrow(() -> new EntityNotFoundException("Architect is not found with such id. id : ".concat(id.toString())));
     }
 
     boolean existsByName(String name);

@@ -10,7 +10,7 @@ public interface ApiKeyRepository extends JpaRepository<ApiKey, Long> {
     Optional<ApiKey> findByApiKey(String apiKey);
 
     default ApiKey findByApiKeyOrThrow(String apiKey) {
-        return findByApiKey(apiKey).orElseThrow(() -> new EntityNotFoundException("Authentication failed."));
+        return findByApiKey(apiKey).orElseThrow(() -> new EntityNotFoundException("Authentication failed. apiKey : ".concat(apiKey)));
     }
 
     boolean existsByApiKey(String apiKey);

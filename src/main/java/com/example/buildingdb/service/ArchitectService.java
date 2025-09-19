@@ -22,7 +22,7 @@ public class ArchitectService {
         ValidationUtil.validateArchitectDto(architectDto);
 
         if (architectRepository.existsByName(architectDto.getName())) {
-            throw new InvalidDataException("The architect's name already exists.");
+            throw new InvalidDataException("Architect's name already exists. architectName: ".concat(architectDto.getName()));
         }
 
         return new ArchitectDto(architectRepository.save(architectDto.toArchitectEntity()));

@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BuildingRepository extends JpaRepository<Building, Long> {
     default Building findByIdOrThrow(Long id) {
-        return findById(id).orElseThrow(() -> new EntityNotFoundException("Building is not found with such name."));
+        return findById(id).orElseThrow(() -> new EntityNotFoundException("Building is not found with such id. id :".concat(id.toString())));
     }
 }

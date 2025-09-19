@@ -50,7 +50,7 @@ public class TagService {
 
     private void validateTagExistenceById(Long id) {
         if (!existsTag(id)) {
-            throw new InvalidDataException("Id is invalid.");
+            throw new InvalidDataException("Id is invalid. tagId: ".concat(id.toString()));
         }
     }
 

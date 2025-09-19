@@ -19,15 +19,20 @@ public class ValidationUtil {
     }
 
     public static void validateArchitectDto(ArchitectDto dto) {
-        if (dto.getName() == null) {
+        String name = dto.getName();
+
+        if (name == null) {
             throw new InvalidDataException("Architect's name can't be null.");
         }
-        if (!isValidArchitectEnglishName(dto.getName())) {
-            throw new InvalidDataException("Architect's name contains non-english characters.");
+        if (!isValidArchitectEnglishName(name)) {
+            throw new InvalidDataException("Architect's name contains non-english characters. name : ".concat(name));
         }
-        if (dto.getKoreanName() != null &&
-                !isValidArchitectKoreanName(dto.getKoreanName())) {
-            throw new InvalidDataException("Architect's korean name is invalid.");
+
+        String koreanName = dto.getKoreanName();
+
+        if (koreanName != null &&
+                !isValidArchitectKoreanName(koreanName)) {
+            throw new InvalidDataException("Architect's korean name is invalid. koreanName : ".concat(koreanName));
         }
     }
 

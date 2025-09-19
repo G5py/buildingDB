@@ -90,13 +90,23 @@ public class CategoryService {
 
     private void validateCategoryDuplicated(Long buildingId, Long tagId) {
         if (existsCategory(buildingId, tagId)) {
-            throw new InvalidDataException("The tag is already set on the building.");
+            StringBuilder stringBuilder = new StringBuilder();
+            throw new InvalidDataException(stringBuilder.append("The tag is already set on the building. buildingId : ")
+                    .append(buildingId)
+                    .append(", tagId : ")
+                    .append(tagId)
+                    .toString());
         }
     }
 
     private void validateCategoryExistence(Long buildingId, Long tagId) {
         if (!existsCategory(buildingId, tagId)) {
-            throw new InvalidDataException("The tag is not set on the building.");
+            StringBuilder stringBuilder = new StringBuilder();
+            throw new InvalidDataException(stringBuilder.append("The tag is not set on the building.  buildingId : ")
+                    .append(buildingId)
+                    .append(", tagId : ")
+                    .append(tagId)
+                    .toString());
         }
     }
 
