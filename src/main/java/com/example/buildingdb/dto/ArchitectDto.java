@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ArchitectDto {
+public class ArchitectDto implements DtoInterface {
     private final boolean success = true;
     private Long id;
     private String name;

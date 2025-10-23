@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Builder
 @AllArgsConstructor
-public class BuildingDto {
+public class BuildingDto implements DtoInterface {
 
     private final boolean success = true;
     private Long id;

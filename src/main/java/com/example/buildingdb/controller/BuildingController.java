@@ -33,8 +33,6 @@ public class BuildingController {
     public ResponseEntity<BuildingDto> postBuilding(@RequestBody BuildingDto buildingDto) throws URISyntaxException {
         BuildingDto resultBuildingDto = buildingService.addBuilding(buildingDto);
 
-        log.info("Building, POST, Building created. id : ".concat(resultBuildingDto.getId().toString()));
-
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI("/buildings/" + resultBuildingDto.getId().toString()));
 
@@ -44,29 +42,19 @@ public class BuildingController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BuildingDto getBuilding(@PathVariable Long id) {
-        BuildingDto buildingDto = buildingService.getBuilding(id);
-
-        log.info("Building, Get, Building Requested. id : ".concat(buildingDto.getId().toString()));
-
-        return buildingDto;
+        return buildingService.getBuilding(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BuildingDto putBuilding(@PathVariable Long id, @RequestBody BuildingDto buildingDto) {
-        BuildingDto updatedBuildingDto = buildingService.putBuilding(id, buildingDto);
-
-        log.info("Building, Put, Building updated. id : ".concat(updatedBuildingDto.getId().toString()));
-
-        return updatedBuildingDto;
+        return buildingService.putBuilding(id, buildingDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BuildingDto deleteBuilding(@PathVariable Long id) {
         buildingService.deleteBuilding(id);
-
-        log.info("Building, Delete, Building deleted. id : ".concat(id.toString()));
 
         return BuildingDto.builder()
                 .id(id)
@@ -77,38 +65,16 @@ public class BuildingController {
     @GetMapping("/{buildingId}/tag")
     @ResponseStatus(HttpStatus.OK)
     public BuildingTagResponse getBuildingTags(@PathVariable Long buildingId) {
-        BuildingTagResponse buildingTag = categoryService.getTagsByBuildingId(buildingId);
-
-        log.info("Building, GET, Tags on building requested. buildingId : ".concat(buildingId.toString()));
-
-        return buildingTag;
+        return categoryService.getTagsByBuildingId(buildingId);
     }
 
     @PostMapping("/{buildingId}/tag")
     public BuildingTagResponse postTagOnBuilding(@PathVariable Long buildingId, @RequestBody Long tagId) {
-        BuildingTagResponse buildingTag = categoryService.addTagOnBuilding(buildingId, tagId);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        log.info(stringBuilder.append("Building, POST, Tag set on building. buildingId : ")
-                .append(buildingId.toString())
-                .append(", tagId : ")
-                .append(tagId.toString())
-                .toString());
-        
-        return buildingTag;
+        return categoryService.addTagOnBuilding(buildingId, tagId);
     }
 
     @DeleteMapping("/{buildingId}/{tagId}")
     public BuildingTagResponse deleteTagOnBuilding(@PathVariable Long buildingId, @PathVariable Long tagId) {
-        BuildingTagResponse buildingTagResponse = categoryService.untagBuilding(buildingId, tagId);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        log.info(stringBuilder.append("Building, DELETE, Tag set on building. buildingId : ")
-                .append(buildingId.toString())
-                .append(", tagId : ")
-                .append(tagId.toString())
-                .toString());
-
-        return buildingTagResponse;
+        return categoryService.untagBuilding(buildingId, tagId);
     }
 }

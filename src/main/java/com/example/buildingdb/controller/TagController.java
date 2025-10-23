@@ -34,8 +34,6 @@ public class TagController {
     public ResponseEntity<TagDto> postTag(@RequestBody TagDto tagDto) throws URISyntaxException {
         TagDto resultTagDto = tagService.addTag(tagDto);
 
-        log.info("Tag, POST, Tag created. id : ".concat(resultTagDto.getId().toString()));
-
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI("/tags/" + resultTagDto.getId().toString()));
 
@@ -45,39 +43,28 @@ public class TagController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TagDto getTag(@PathVariable Long id) {
-        TagDto tagDto = tagService.getTag(id);
 
-        log.info("Tag, GET, Tag requested. id : ".concat(tagDto.getId().toString()));
-
-        return tagDto;
+        return tagService.getTag(id);
     }
 
     @GetMapping("/{tagId}/building")
     @ResponseStatus(HttpStatus.OK)
     public TagBuildingResponse getTaggedBuildings(@PathVariable Long tagId) {
-        TagBuildingResponse buildingsByTag = categoryService.getBuildingsByTagId(tagId);
 
-        log.info("Tag, GET, Buildings by tag requested. id : ".concat(tagId.toString()));
-
-        return buildingsByTag;
+        return categoryService.getBuildingsByTagId(tagId);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TagDto putTag(@PathVariable Long id, @RequestBody TagDto tagDto) {
-        TagDto updatedTagDto = tagService.putTag(id, tagDto);
 
-        log.info("Tag, PUT, Tag updated. id : ".concat(updatedTagDto.getId().toString()));
-
-        return updatedTagDto;
+        return tagService.putTag(id, tagDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TagDto deleteTag(@PathVariable Long id) {
         tagService.deleteTag(id);
-
-        log.info("Tag, DELETE, Tag deleted. id : ".concat(id.toString()));
 
         return TagDto.builder()
                 .id(id)

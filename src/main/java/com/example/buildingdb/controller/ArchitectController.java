@@ -29,8 +29,6 @@ public class ArchitectController {
     public ResponseEntity<ArchitectDto> postArchitect(@RequestBody ArchitectDto architectDto) throws URISyntaxException {
         ArchitectDto resultArchitectDto = architectService.addArchitect(architectDto);
 
-        log.info("Architect, POST, Architect created. id : ".concat(resultArchitectDto.getId().toString()));
-
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI("/architects/".concat(resultArchitectDto.getId().toString())));
 
@@ -40,29 +38,21 @@ public class ArchitectController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ArchitectDto getArchitect(@PathVariable Long id) {
-        ArchitectDto architectDto = architectService.getArchitect(id);
 
-        log.info("Architect, GET, Architect requested. id : ".concat(id.toString()));
-
-        return architectDto;
+        return architectService.getArchitect(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ArchitectDto putArchitect(@PathVariable Long id, @RequestBody ArchitectDto architectDto) {
-        ArchitectDto updatedArchitectDto = architectService.putArchitect(id, architectDto);
 
-        log.info("Architect, PUT, Architect updated. id : ".concat(id.toString()));
-
-        return updatedArchitectDto;
+        return architectService.putArchitect(id, architectDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ArchitectDto deleteArchitect(@PathVariable Long id) {
         architectService.deleteArchitect(id);
-
-        log.info("Architect, DELETE, Architect deleted. id : ".concat(id.toString()));
 
         return ArchitectDto.builder().id(id).build();
     }
