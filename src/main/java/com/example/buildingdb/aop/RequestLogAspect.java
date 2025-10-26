@@ -13,12 +13,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequestLogAspect {
 
-    @Pointcut("execution(* com.example.buildingdb.controller.ExceptionController.*(..))")
-    private void exceptionHandlerPointcut() {}
+    @Pointcut("execution(* com.example.buildingdb.controller.ExceptionController.handleEntityNotFoundException(..))")
+    private void exceptionHandlerPointcutEntityNotFound() {}
+
+    @Pointcut("execution(* com.example.buildingdb.controller.ExceptionController.handleInvalidDataException(..))")
+    private void exceptionHandlerPointcutInvalidDataException() {}
+
+    @Pointcut("execution(* com.example.buildingdb.controller.ExceptionController.handleURISyntaxException(..))")
+    private void exceptionHandlerPointcutURISyntaxException() {}
 
     @Pointcut("execution(* com.example.buildingdb.controller.*.*(Long))")
     private void controllerPointcutLong() {}
-
 
     @Pointcut("execution(* com.example.buildingdb.controller.*.*(Long, Long))")
     private void controllerPointcutLongLong() {}
@@ -28,6 +33,7 @@ public class RequestLogAspect {
 
     @Pointcut("execution(* com.example.buildingdb.controller.*.*(com.example.buildingdb.dto..*))")
     private void controllerPointcutDTO() {}
+
 
     @After("(controllerPointcutLong() || controllerPointcutLongDTO()) && args(id, ..)")
     public void logRequest(JoinPoint joinPoint, Long id) {
@@ -48,5 +54,15 @@ public class RequestLogAspect {
         String methodName = joinPoint.getSignature().getName();
 
         log.info(methodName + ": " + buildingId + "-" + tagId);
+    }
+
+    @After("(exceptionHandlerPointcutEntityNotFound() || exceptionHandlerPointcutInvalidDataException()) && args(e) ")
+    public void logExceptionHandlingNormal(JoinPoint joinPoint, RuntimeException e) {
+        log.info(e.getMessage());
+    }
+
+    @After("exceptionHandlerPointcutURISyntaxException() && args(e)")
+    public void logExceptionHandlingCritical(JoinPoint joinPoint, Exception e) {
+        log.error(e.getMessage());
     }
 }
