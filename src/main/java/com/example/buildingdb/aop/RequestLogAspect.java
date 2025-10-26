@@ -57,12 +57,12 @@ public class RequestLogAspect {
     }
 
     @After("(exceptionHandlerPointcutEntityNotFound() || exceptionHandlerPointcutInvalidDataException()) && args(e) ")
-    public void logExceptionHandlingNormal(JoinPoint joinPoint, RuntimeException e) {
+    public void logExceptionHandlingNormal(RuntimeException e) {
         log.info(e.getMessage());
     }
 
     @After("exceptionHandlerPointcutURISyntaxException() && args(e)")
-    public void logExceptionHandlingCritical(JoinPoint joinPoint, Exception e) {
+    public void logExceptionHandlingCritical(Exception e) {
         log.error(e.getMessage());
     }
 }
