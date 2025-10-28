@@ -33,6 +33,7 @@ dependencies {
     implementation 'org.locationtech.jts:jts-core:1.18.2'
     implementation 'org.flywaydb:flyway-mysql'
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:8.0.1'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
 

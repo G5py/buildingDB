@@ -2,9 +2,11 @@ package com.example.buildingdb.controller;
 
 
 import com.example.buildingdb.dto.ErrorResponse;
+import com.example.buildingdb.exception.BucketException;
 import com.example.buildingdb.exception.InvalidDataException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -38,5 +40,12 @@ public class ExceptionController {
         return ResponseEntity
                 .badRequest()
                 .body(new ErrorResponse(exceptionMessage));
+    }
+
+    @ExceptionHandler(BucketException.class)
+    public ResponseEntity<ErrorResponse> handleBucketException(BucketException e) {
+        return ResponseEntity
+                .status(HttpStatus.TOO_MANY_REQUESTS)
+                .body(new ErrorResponse(e.getMessage()));
     }
 }

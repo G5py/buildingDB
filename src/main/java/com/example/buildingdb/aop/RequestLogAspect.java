@@ -22,6 +22,9 @@ public class RequestLogAspect {
     @Pointcut("execution(* com.example.buildingdb.controller.ExceptionController.handleURISyntaxException(..))")
     private void exceptionHandlerPointcutURISyntaxException() {}
 
+    @Pointcut("execution(* com.example.buildingdb.controller.ExceptionController.handleBucketException(..))")
+    private void exceptionHandlerPointcutBucketException() {}
+
     @Pointcut("execution(* com.example.buildingdb.controller.*.*(Long))")
     private void controllerPointcutLong() {}
 
@@ -56,7 +59,7 @@ public class RequestLogAspect {
         log.info(methodName + ": " + buildingId + "-" + tagId);
     }
 
-    @After("(exceptionHandlerPointcutEntityNotFound() || exceptionHandlerPointcutInvalidDataException()) && args(e) ")
+    @After("(exceptionHandlerPointcutEntityNotFound() || exceptionHandlerPointcutInvalidDataException() || exceptionHandlerPointcutBucketException()) && args(e) ")
     public void logExceptionHandlingNormal(RuntimeException e) {
         log.info(e.getMessage());
     }
