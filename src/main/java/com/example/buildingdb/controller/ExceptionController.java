@@ -19,15 +19,13 @@ public class ExceptionController {
     public ResponseEntity<ErrorResponse> handleInvalidDataException(InvalidDataException e) {
         String exceptionMessage = e.getMessage();
 
-        log.info(exceptionMessage);
         return ResponseEntity
                 .badRequest()
                 .body(new ErrorResponse(exceptionMessage));
     }
 
     @ExceptionHandler(URISyntaxException.class)
-    public ResponseEntity<String> handleURISyntaxException(URISyntaxException e) {
-        log.error("URI syntax exception");
+    public ResponseEntity<String> handleURISyntaxException() {
         return ResponseEntity
                 .internalServerError()
                 .body("Failed to create URI.");
@@ -37,7 +35,6 @@ public class ExceptionController {
     public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
         String exceptionMessage = e.getMessage();
 
-        log.info(exceptionMessage);
         return ResponseEntity
                 .badRequest()
                 .body(new ErrorResponse(exceptionMessage));
