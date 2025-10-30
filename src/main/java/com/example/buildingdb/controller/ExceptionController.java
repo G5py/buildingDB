@@ -31,7 +31,7 @@ public class ExceptionController {
 
     @LogError
     @ExceptionHandler(URISyntaxException.class)
-    public ResponseEntity<String> handleURISyntaxException() {
+    public ResponseEntity<String> handleURISyntaxException(URISyntaxException e) {
         return ResponseEntity
                 .internalServerError()
                 .body("Failed to create URI.");
