@@ -53,7 +53,7 @@ public class RequestLogAspect {
     }
 
     @After("controllerPointcutLongLong() && args(buildingId, tagId)")
-    public void logPutRequest(JoinPoint joinPoint, Long buildingId, String tagId) {
+    public void logPutRequest(JoinPoint joinPoint, Long buildingId, Long tagId) {
         String methodName = joinPoint.getSignature().getName();
 
         log.info(methodName + ": " + buildingId + "-" + tagId);
