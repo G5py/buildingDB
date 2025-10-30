@@ -59,12 +59,12 @@ public class RequestLogAspect {
         log.info(methodName + ": " + buildingId + "-" + tagId);
     }
 
-    @After("(exceptionHandlerPointcutEntityNotFound() || exceptionHandlerPointcutInvalidDataException() || exceptionHandlerPointcutBucketException()) && args(e) ")
+    @After("@annotation(LogInfo) && args(e) ")
     public void logExceptionHandlingNormal(RuntimeException e) {
         log.info(e.getMessage());
     }
 
-    @After("exceptionHandlerPointcutURISyntaxException() && args(e)")
+    @After("@annotation(LogError) && args(e)")
     public void logExceptionHandlingCritical(Exception e) {
         log.error(e.getMessage());
     }

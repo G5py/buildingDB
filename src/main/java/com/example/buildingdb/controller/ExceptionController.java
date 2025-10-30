@@ -1,6 +1,8 @@
 package com.example.buildingdb.controller;
 
 
+import com.example.buildingdb.aop.LogError;
+import com.example.buildingdb.aop.LogInfo;
 import com.example.buildingdb.dto.ErrorResponse;
 import com.example.buildingdb.exception.BucketException;
 import com.example.buildingdb.exception.InvalidDataException;
@@ -17,6 +19,7 @@ import java.net.URISyntaxException;
 @RestControllerAdvice
 public class ExceptionController {
 
+    @LogInfo
     @ExceptionHandler(InvalidDataException.class)
     public ResponseEntity<ErrorResponse> handleInvalidDataException(InvalidDataException e) {
         String exceptionMessage = e.getMessage();
@@ -26,6 +29,7 @@ public class ExceptionController {
                 .body(new ErrorResponse(exceptionMessage));
     }
 
+    @LogError
     @ExceptionHandler(URISyntaxException.class)
     public ResponseEntity<String> handleURISyntaxException() {
         return ResponseEntity
@@ -33,6 +37,7 @@ public class ExceptionController {
                 .body("Failed to create URI.");
     }
 
+    @LogInfo
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
         String exceptionMessage = e.getMessage();
@@ -42,6 +47,7 @@ public class ExceptionController {
                 .body(new ErrorResponse(exceptionMessage));
     }
 
+    @LogInfo
     @ExceptionHandler(BucketException.class)
     public ResponseEntity<ErrorResponse> handleBucketException(BucketException e) {
         return ResponseEntity
